@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import styles from "./SearchForm.module.css";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from './SearchForm.module.css';
 
 class SearchForm extends Component {
-  state = { query: "" };
+  state = { query: '' };
 
   handleChange = e => {
     this.setState({
-      query: e.target.value
+      query: e.target.value,
     });
   };
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.query);
-    this.setState({ query: "" });
+    this.setState({ query: '' });
   };
 
   render() {
@@ -34,7 +34,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SearchForm;

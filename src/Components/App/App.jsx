@@ -1,18 +1,18 @@
-import React, { Component, Fragment } from "react";
-import styles from "./App.module.css";
-import * as photoFetcher from "../../services/Fetcher";
-import SearchForm from "../SearchForm/SearchForm";
-import Gallery from "../Gallery/Gallery";
-import ErrorNotification from "../../services/ErrorNotification";
+import React, { Component, Fragment } from 'react';
+import styles from './App.module.css';
+import * as photoFetcher from '../../services/Fetcher';
+import SearchForm from '../SearchForm/SearchForm';
+import Gallery from '../Gallery/Gallery';
+import ErrorNotification from '../../services/ErrorNotification';
 
 class App extends Component {
   state = {
     galleryItems: [],
     error: null,
     isModalOpen: false,
-    largeImageURL: "",
-    currentQuery: "",
-    currentPageNumber: 1
+    largeImageURL: '',
+    currentQuery: '',
+    currentPageNumber: 1,
   };
 
   componentDidMount() {
@@ -29,22 +29,22 @@ class App extends Component {
   };
 
   handleModalOpening = e => {
-    if (e.target.parentNode.type === "button") {
+    if (e.target.parentNode.type === 'button') {
       const clickedItemPhotoURL = e.currentTarget.firstElementChild.src;
       const findItem = this.state.galleryItems.find(
-        item => item.webformatURL === clickedItemPhotoURL
+        item => item.webformatURL === clickedItemPhotoURL,
       );
       const largeImage = findItem.largeImageURL;
       this.setState({ largeImageURL: largeImage, isModalOpen: true });
     }
 
-    if (e.target.id === "overlay") {
+    if (e.target.id === 'overlay') {
       this.setState({ isModalOpen: false });
     }
   };
 
   handleEscKey = e => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       this.setState({ isModalOpen: false });
     }
   };
@@ -55,13 +55,14 @@ class App extends Component {
       .then(({ data }) => {
         this.setState({
           galleryItems: [...this.state.galleryItems, ...data.hits],
-          currentPageNumber: this.state.currentPageNumber + 1
+          currentPageNumber: this.state.currentPageNumber + 1,
         });
         window.scrollTo({
           top: document.body.scrollHeight,
-          behavior: "smooth"
+          behavior: 'smooth',
         });
-      });
+      })
+      .catch(error => this.setState({ error }));
   };
 
   render() {
