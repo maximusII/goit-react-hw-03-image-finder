@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styles from './App.module.css';
-import * as photoFetcher from '../../services/Fetcher';
+import fetchPhotos from '../../services/Fetcher';
 import SearchForm from '../SearchForm/SearchForm';
 import Gallery from '../Gallery/Gallery';
 import ErrorNotification from '../../services/ErrorNotification';
@@ -20,8 +20,7 @@ class App extends Component {
   }
 
   fetchPhotos = query => {
-    photoFetcher
-      .fetchPhotos(query)
+    fetchPhotos(query)
       .then(({ data }) => {
         this.setState({ galleryItems: data.hits, currentQuery: query });
       })
@@ -50,8 +49,7 @@ class App extends Component {
   };
 
   handleLoadMore = () => {
-    photoFetcher
-      .fetchPhotos(this.state.currentQuery, this.state.currentPageNumber + 1)
+    fetchPhotos(this.state.currentQuery, this.state.currentPageNumber + 1)
       .then(({ data }) => {
         this.setState({
           galleryItems: [...this.state.galleryItems, ...data.hits],
