@@ -4,6 +4,7 @@ import fetchPhotos from '../../services/Fetcher';
 import SearchForm from '../SearchForm/SearchForm';
 import Gallery from '../Gallery/Gallery';
 import ErrorNotification from '../../services/ErrorNotification';
+import Modal from '../Gallery/Modal/Modal';
 
 class App extends Component {
   state = {
@@ -68,6 +69,13 @@ class App extends Component {
     return (
       <Fragment>
         {error && <ErrorNotification text={error.message} />}
+        {isModalOpen && (
+          <Modal
+            largeImageURL={largeImageURL}
+            onFullscreenClick={this.handleModalOpening}
+            handleEscKey={this.handleEscKey}
+          />
+        )}
         {galleryItems.length > 0 && (
           <div className={styles.app}>
             <SearchForm onSubmit={this.fetchPhotos} />
